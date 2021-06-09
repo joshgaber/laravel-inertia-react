@@ -2,10 +2,11 @@ import Button from '@/Components/Button';
 import Guest from '@/Layouts/Guest';
 import Input from '@/Components/Input';
 import Label from '@/Components/Label';
-import React, { useEffect } from 'react';
+import React, {ChangeEventHandler, FormEventHandler, useEffect} from 'react';
 import ValidationErrors from '@/Components/ValidationErrors';
 import { InertiaLink } from '@inertiajs/inertia-react';
 import { useForm } from '@inertiajs/inertia-react';
+import route from "ziggy-js";
 
 export default function Register() {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -21,11 +22,11 @@ export default function Register() {
         };
     }, []);
 
-    const onHandleChange = (event) => {
-        setData(event.target.name, event.target.type === 'checkbox' ? event.target.checked : event.target.value);
+    const onHandleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+        setData(event.target.name as keyof typeof data, event.target.type === 'checkbox' ? (event.target.checked ? '1' : '0') : event.target.value);
     };
 
-    const submit = (e) => {
+    const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
         post(route('register'));

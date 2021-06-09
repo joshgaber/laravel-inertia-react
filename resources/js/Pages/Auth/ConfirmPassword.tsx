@@ -5,6 +5,7 @@ import Label from '@/Components/Label';
 import React, { useEffect } from 'react';
 import ValidationErrors from '@/Components/ValidationErrors';
 import { useForm } from '@inertiajs/inertia-react';
+import route from "ziggy-js";
 
 export default function ConfirmPassword() {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -17,11 +18,11 @@ export default function ConfirmPassword() {
         };
     }, []);
 
-    const onHandleChange = (event) => {
-        setData(event.target.name, event.target.value);
+    const onHandleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
+        setData(event.target.name as keyof typeof data, event.target.value);
     };
 
-    const submit = (e) => {
+    const submit: React.FormEventHandler = (e) => {
         e.preventDefault();
 
         post(route('password.confirm'));

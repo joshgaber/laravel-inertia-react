@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
 
 interface ButtonProps {
-    type: 'submit' | 'button' | 'reset'
+    type?: 'submit' | 'button' | 'reset'
     className: string
     processing: boolean
 }

@@ -1,8 +1,13 @@
 import React, { useState, useContext } from 'react';
-import { InertiaLink } from '@inertiajs/inertia-react';
+import {InertiaLink, InertiaLinkProps} from '@inertiajs/inertia-react';
 import { Transition } from '@headlessui/react';
 
-const DropDownContext = React.createContext();
+interface Taco {
+    open: boolean,
+    setOpen: (open: boolean) => void
+}
+
+const DropDownContext = React.createContext<Taco>({} as Taco);
 
 const Dropdown = ({ children }) => {
     const [open, setOpen] = useState(false);
@@ -30,7 +35,13 @@ const Trigger = ({ children }) => {
     );
 };
 
-const Content = ({ align = 'right', width = '48', contentClasses = 'py-1 bg-white', children }) => {
+interface ContentProps {
+    align: string,
+    width: string,
+    contentClasses: string
+}
+
+const Content: React.FC<ContentProps> = ({ align = 'right', width = '48', contentClasses = 'py-1 bg-white', children }) => {
     const { open, setOpen } = useContext(DropDownContext);
 
     let alignmentClasses = 'origin-top';
@@ -73,7 +84,8 @@ const Content = ({ align = 'right', width = '48', contentClasses = 'py-1 bg-whit
     );
 };
 
-const Link = ({ href, method = 'post', as = 'a', children }) => {
+
+const Link: React.FC<InertiaLinkProps> = ({ href, method = 'post', as = 'a', children }) => {
     return (
         <InertiaLink
             href={href}

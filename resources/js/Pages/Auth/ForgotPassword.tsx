@@ -1,20 +1,25 @@
 import Button from '@/Components/Button';
 import Guest from '@/Layouts/Guest';
 import Input from '@/Components/Input';
-import React from 'react';
+import React, {ChangeEventHandler, FC, FormEventHandler} from 'react';
 import ValidationErrors from '@/Components/ValidationErrors';
 import { useForm } from '@inertiajs/inertia-react';
+import route from "ziggy-js";
 
-export default function ForgotPassword({ status }) {
+interface ForgotPasswordProps {
+    status: string
+}
+
+const ForgotPassword: FC<ForgotPasswordProps> = ({ status }) => {
     const { data, setData, post, processing, errors } = useForm({
         email: '',
     });
 
-    const onHandleChange = (event) => {
-        setData(event.target.name, event.target.value);
+    const onHandleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+        setData(event.target.name as keyof typeof data, event.target.value);
     };
 
-    const submit = (e) => {
+    const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
         post(route('password.email'));
@@ -50,3 +55,5 @@ export default function ForgotPassword({ status }) {
         </Guest>
     );
 }
+
+export default ForgotPassword
