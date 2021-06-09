@@ -1,38 +1,39 @@
-import React, { useEffect, useRef } from 'react';
+import React, {FC, useEffect, useRef} from 'react';
 
-export default function Input({
-    type = 'text',
-    name,
-    value,
+
+interface InputProps extends React.HTMLProps<HTMLInputElement> {
+    isFocused?: boolean;
+    handleChange: React.ChangeEventHandler<HTMLInputElement>
+}
+
+
+const Input: FC<InputProps> = ({
     className,
-    autoComplete,
-    required,
     isFocused,
     handleChange,
-}) {
-    const input = useRef();
+    ...props
+}) => {
+    const input = useRef<HTMLInputElement | null>(null);
 
     useEffect(() => {
         if (isFocused) {
-            input.current.focus();
+            input.current?.focus();
         }
     }, []);
 
     return (
         <div className="flex flex-col items-start">
             <input
-                type={type}
-                name={name}
-                value={value}
+                {...props}
                 className={
                     `border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm ` +
                     className
                 }
                 ref={input}
-                autoComplete={autoComplete}
-                required={required}
                 onChange={(e) => handleChange(e)}
             />
         </div>
     );
 }
+
+export default Input;

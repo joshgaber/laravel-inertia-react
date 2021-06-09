@@ -70,7 +70,6 @@ const Login: React.FC<LoginProps> = ({ status, canResetPassword }) => {
                         handleChange={onHandleChange}
                     />
                 </div>
-
                 <div className="block mt-4">
                     <label className="flex items-center">
                         <Checkbox name="remember" value={data.remember} handleChange={onHandleChange} />

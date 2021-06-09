@@ -1,8 +1,14 @@
-import React from 'react';
+import React, {FC} from 'react';
 
-export default function ValidationErrors({ errors }) {
+type ValidationErrorsProps = {
+    errors: {
+        [key: string]: string
+    }
+}
+
+const ValidationErrors: FC<ValidationErrorsProps> = ({ errors }) => {
     return (
-        Object.keys(errors).length > 0 && (
+        Object.keys(errors).length > 0 ? (
             <div className="mb-4">
                 <div className="font-medium text-red-600">Whoops! Something went wrong.</div>
 
@@ -12,6 +18,8 @@ export default function ValidationErrors({ errors }) {
                     })}
                 </ul>
             </div>
-        )
+        ) : null
     );
 }
+
+export default ValidationErrors
